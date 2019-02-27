@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow');
+html{
+  min-height: 100%
+}
+body {
+  font-family: sans-serif PT Sans Narrow; 
+  background: url(./img/background.jpg) fixed;
+  background-size: 100%;  
+  background-position: bottom;  
+  max-height: 100%; 
+  background-color: lightgoldenrodyellow;
+
+}
