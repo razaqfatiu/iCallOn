@@ -5,7 +5,7 @@ import Navbar from './Components/Layout/Navbar'
 import SignIn from './Components/auth/signIn'
 import SignUp from './Components/auth/signUp'
 import Home from './Components/Content/home'
-
+import Summary from './Components/Content/summary'
 class App extends Component {
   render() {
     return (
@@ -16,6 +16,7 @@ class App extends Component {
         <Route exact path="/" component={Home}/>
         <Route path="/signin" component={SignIn}/>
         <Route path="/signup" component={SignUp}/>
+        <Route path="/summary" component={Summary} />
       </Switch>
       </div>
       </BrowserRouter>

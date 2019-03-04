@@ -4,10 +4,11 @@ import { connect } from 'react-redux'
 import { Button, Collapse, Form } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom';
 import { callALetter } from '../../store/Actions/homeActions';
-// import { Fields, handleDisable } from './input'
+import Toggle from './Toggle'
 
 class Home extends Component {
     state = {
+        letter: '',
         name: '',
         animal: '',
         place: '',
@@ -15,19 +16,27 @@ class Home extends Component {
        
     }
 
-    handleDisable = () => {
-      // ReactDOM.render(Form, document.getElementById("tog").disabled = true)
+    handleDisable = () => {      
+      document.getElementById("bbtn").disabled= true
+      const form = document.getElementById('myForm')
+      const formElements = form.elements
+      const len = formElements.length;
+      for (let i = 0; i < len; ++i) {
+        formElements[i].disabled=true;
+      }
     }
     handleOnChange = (event) => {
+        event.preventDefault(); 
         this.setState({ [event.target.id] : event.target.value})
         console.log(this.state)
     }
 
-    // handleOnClick = () => {
-      // this.setState({open: !open})
+    handleOnClick = (id) => {
+      this.setState({letter: id})
+      console.log(id)
       // this.handleTime()
       // this.handleDisable()
-    // }
+    }
 
     // handleTime = () => {
     //   let setMins = 1
@@ -52,44 +61,59 @@ class Home extends Component {
     //   setInterval(timer, 1000)
     //   clearInterval(setTimer)
     // }
-    handleSub = (event) => {
-      event.preventDefault()
+    // handleSub = (event) => {
+    //   event.preventDefault()
+      
+    // }
+    handleSubmit = (event) => {
+      console.log(this.state)
       this.props.callALetter(this.state)
+      this.handleDisable()
+      return <Redirect to="/summary" />
     }
 
 
   render(props) {
     const { open } = this.state;
-    // const { callALetter } = this.props
-    //const alphabets = this.props.alphabets
-    // if(!auth.uid) return <Redirect to="signin" />
+    const { callALetter, auth } = this.props
+    const handleOnClick = this.handleOnClick
+    const { alphabets } = this.props
+    if(!auth.uid) return <Redirect to="/signin" />
     return (
       <div className="container">
+      
       <h3 id="time">Time</h3>
-       {/* {alphabets && alphabets.map((alphabet, index) => <span key={index+1}> <Button  onClick={() =>{this.handleOnClick() ;this.setState({ open: true })}} aria-controls="tog" aria-expanded = {open}>{alphabet}</Button></span> )} */}
-       <Button onClick={() =>this.setState({ open: !open })} aria-controls="tog" aria-expanded = {open} id="alph">A</Button>
-       <Form>
-        <Collapse in={this.state.open}>
-        <div className="input-group collapse" id="tog">
-        <input type="text" id="name" className="form-control" onChange={this.handleOnChange} placeholder="Person's Name"/>
+       <Toggle render = {({ on, toggle }) => (
+         <div>
+        {on && <form id="myForm"><div className="input-group" id="tog">
+        <input type="text" id="name" className="form-control" onChange={this.handleOnChange} placeholder="Name"/>
         <input type="text" id="animal" className="form-control" onChange={this.handleOnChange}  placeholder="Animal"/>
         <input type="text" id="place" className="form-control" onChange={this.handleOnChange} placeholder="Place"/>
         <input type="text" id="thing" className="form-control" onChange={this.handleOnChange} placeholder="Things"/>
-        <Button onClick={this.handleSub}>submit</Button>
-        </div>
-       </Collapse>
-       </Form>
+        <input type="button" id="bbtn" className="form-control btn btn-success" onClick={this.handleSubmit} value="Submit" />
+        </div></form>}
+        {alphabets && alphabets.map((alphabet, i) => <span key={i+1}>
+        <Button id={alphabet} className={i+1} onClick={(e)=>{
+          e.preventDefault()
+          toggle();
+         this.handleOnClick(e.target.id)}
+         }>{alphabet}</Button></span> )}
+       </div>
+       )} />
+        
+       
        <div id="demo"></div>
       </div>
     )
   }
 }
 
-// const mapStateToProps = (state, ownProps) => {
-//   return {
-//     alphabets: state.home.alphabets,
-//   }
-// }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    alphabets: state.home.alphabets,
+    auth: state.firebase.auth
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -98,4 +122,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(null, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
