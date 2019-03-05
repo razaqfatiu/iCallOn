@@ -8,7 +8,7 @@ const initialState = {
     console.log("Signin error")
     return{
       ...state,
-      authError: "Signin failed"
+      authError: action.err.message
     }
 
   case 'SIGNIN_SUCCESS':
@@ -29,7 +29,7 @@ const initialState = {
     authError: null
   }
 
-  case "SIGNUP_FAILED":
+  case "SIGNUP_ERROR":
   console.log("Sign up failed")
   return {
     ...state,

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import './home.css'
 import { connect } from 'react-redux'
-import { Button, Collapse, Form } from 'react-bootstrap'
-import { Redirect } from 'react-router-dom';
+import { Button } from 'react-bootstrap'
+import { Redirect, Link } from 'react-router-dom';
 import { callALetter } from '../../store/Actions/homeActions';
 import Toggle from './Toggle'
 
@@ -69,7 +69,6 @@ class Home extends Component {
       console.log(this.state)
       this.props.callALetter(this.state)
       this.handleDisable()
-      return <Redirect to="/summary" />
     }
 
 
@@ -90,8 +89,8 @@ class Home extends Component {
         <input type="text" id="animal" className="form-control" onChange={this.handleOnChange}  placeholder="Animal"/>
         <input type="text" id="place" className="form-control" onChange={this.handleOnChange} placeholder="Place"/>
         <input type="text" id="thing" className="form-control" onChange={this.handleOnChange} placeholder="Things"/>
-        <input type="button" id="bbtn" className="form-control btn btn-success" onClick={this.handleSubmit} value="Submit" />
-        </div></form>}
+         <Link to="/summary" > <input type="button" id="bbtn" className="form-control btn btn-success" onClick={this.handleSubmit} value="Submit" />
+        </Link></div></form>}
         {alphabets && alphabets.map((alphabet, i) => <span key={i+1}>
         <Button id={alphabet} className={i+1} onClick={(e)=>{
           e.preventDefault()

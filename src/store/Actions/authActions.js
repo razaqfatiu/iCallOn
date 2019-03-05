@@ -5,7 +5,7 @@ export const signIn = (credentials) => {
     firebase.auth().signInWithEmailAndPassword(
       credentials.email, credentials.password
       ).then(() => dispatch({type: "SIGNIN_SUCCESS"})
-      ).catch(err => dispatch({type: "SIGNIN_ ERROR", err}))
+      ).catch(err => dispatch({type: "SIGNIN_ERROR", err}))
   }
 }
 

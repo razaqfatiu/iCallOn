@@ -35,6 +35,11 @@ this.props.signIn(this.state)
                 </div>
 
                 <button className="btn btn-primary" onClick={this.handleSignIn}>Signin</button>
+
+                 <div className="text-warning text-center"> 
+                  { authError ? <p> {authError} </p> : null }
+                 </div> 
+
             </form>
         )
     }

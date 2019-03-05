@@ -4,7 +4,6 @@ html{
 }
 body {
   font-family: sans-serif PT Sans Narrow; 
-  background: url(./img/background.jpg) fixed;
   background-size: 100%;  
   background-position: bottom;  
   max-height: 100%; 
